@@ -1,4 +1,7 @@
 ﻿*.db
+*.db-shm
+*.db-wal
+.migrations/
 
 ## Folder config file
 Desktop.ini
