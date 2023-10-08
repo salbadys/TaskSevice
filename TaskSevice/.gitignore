@@ -1,0 +1,27 @@
+﻿*.db
+
+## Folder config file
+Desktop.ini
+Recycle Bin used on file shares
+
+## VS Code directories
+.vscode/
+
+## VS Code
+.vscode/
+*.code-workspace
+
+
+## VS Code directories
+*.vscode/
+.vscode/
+*.log
+
+
+## Folder config file
+Desktop.ini
+Recycle Bin used on file shares
+
+## VS Code directories
+.vscode/
+

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<TaskSevice.Models.Tasks>
+
+@{
+    ViewData["Title"] = "Tasks List";
+}
+
+<style>
+    .content-wrapper {
+        max-width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+</style>
+
+<div class="content-wrapper">
+    <h2>Сервис управления задачами</h2>
+    <table class="table">
+        <thead>
+            <tr>
+            
+                <th>Название</th>
+                <th>Исполнитель</th>
+                <th>Дата создания</th>
+                <th>Статус</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in Model)
+            {
+                <tr data-id="@task.Id">
+                    <td>@task.Title</td>
+                    <td>@task.Executors</td>
+                    <td>@task.RegistrationDate.ToShortDateString()</td>
+                    <td>@TaskSevice.Service.GetStatus.GetInRussian(task.Status)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@task.Id" class="btn btn-secondary btn-sm">Редактировать</a>
+                        <button class="btn btn-danger btn-sm delete-task" onclick="deleteTask(@task.Id)">Удалить</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function deleteTask(taskId) {
+        if (!confirm('Вы действительно хотите удалить задачу?')) {
+            return;
+        }
+
+        fetch(`/Tasks/DeleteTask?id=${taskId}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const taskElement = document.querySelector(`[data-id="${taskId}"]`);
+                if (taskElement) {
+                    taskElement.remove();
+                }
+            })
+            .catch(error => {
+                console.log('There was a problem with the delete operation:', error.message);
+            });
+    }
+</script>

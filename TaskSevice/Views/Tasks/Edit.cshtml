@@ -1,0 +1,44 @@
+﻿@model TaskSevice.Models.Tasks
+
+<link rel="stylesheet" href="~/css/taskStyles.css">
+
+<div class="container">
+    <div class="task-tree">
+        <h2>Дерево задачи</h2>
+        <ul onclick="toggleSubTasks(event)">
+            @{
+                RenderTaskTree(Model);
+            }
+        </ul>
+    </div>
+
+    <div class="task-details">
+        Выберите задачу
+    </div>
+</div>
+
+@{
+    void RenderTaskTree(Tasks task)
+    {
+        <li data-task-id="@task.Id" id="firstTask">
+            @task.Title
+            @if (task.SubTasks.Any())
+            {
+                <ul>
+                    @foreach (var subTask in task.SubTasks)
+                    {
+                        RenderTaskTree(subTask);
+                    }
+                </ul>
+            }
+        </li>
+    }
+}
+
+<div id="notification" class="notification">
+    Задание успешно обновлено!
+</div>
+
+<script src="~/js/site.js"></script>
+
+
